@@ -6,7 +6,7 @@ import 'package:flutter_auto_test/src/utils/generate_html.dart';
 import 'package:flutter_auto_test/src/utils/image_comparison.dart';
 
 class TestReportExecutor {
-  List<String> getAllImagesInPath(String path) {
+  List<String> _getAllImagesInPath(String path) {
     final List<String> images = [];
     final Directory dir = Directory(path);
     final List<FileSystemEntity> files = dir.listSync(recursive: true);
@@ -20,7 +20,7 @@ class TestReportExecutor {
     return images;
   }
 
-  Map<String, String> getFileNameAndPathMapFromImages(List<String> images) {
+  Map<String, String> _getFileNameAndPathMapFromImages(List<String> images) {
     final Map<String, String> fileNameAndPathMap = {};
     for (final String image in images) {
       final String fileName = image.split('/').last;
@@ -29,7 +29,7 @@ class TestReportExecutor {
     return fileNameAndPathMap;
   }
 
-  Future<List<ImagePair>> getScoredImagePairs(
+  Future<List<ImagePair>> _getScoredImagePairs(
       Map<String, String> referenceFileNameAndPathMap,
       Map<String, String> targetFileNameAndPathMap) async {
     final ImageCompare imageCompare = ImageCompare();
@@ -48,32 +48,32 @@ class TestReportExecutor {
     return imagePairs;
   }
 
-  Future<List<ImagePair>> getScoredResult(String referenceFolderPath,
+  Future<List<ImagePair>> _getScoredResult(String referenceFolderPath,
       String targetFolderPath, double threshold) async {
     final List<String> referenceImages =
-        getAllImagesInPath(referenceFolderPath);
-    final List<String> targetImages = getAllImagesInPath(targetFolderPath);
+        _getAllImagesInPath(referenceFolderPath);
+    final List<String> targetImages = _getAllImagesInPath(targetFolderPath);
     final Map<String, String> referenceFileNameAndPathMap =
-        getFileNameAndPathMapFromImages(referenceImages);
+        _getFileNameAndPathMapFromImages(referenceImages);
     final Map<String, String> targetFileNameAndPathMap =
-        getFileNameAndPathMapFromImages(targetImages);
-    return await getScoredImagePairs(
+        _getFileNameAndPathMapFromImages(targetImages);
+    return await _getScoredImagePairs(
         referenceFileNameAndPathMap, targetFileNameAndPathMap);
   }
 
-  void generateReport(
-      List<ImagePair> imagePairs, String reportPath, double threshold) {
+  void _generateReport(TestResult result, String reportPath) {
     final GenerateHtml generateHtml = GenerateHtml();
-    final String html = generateHtml
-        .generateHtml(TestResult(imagePairs: imagePairs, threshold: threshold));
+    final String html = generateHtml.generateHtml(result);
     final File htmlFile = File(reportPath);
     htmlFile.writeAsStringSync(html);
   }
 
-  Future<void> run(String referenceFolderPath, String targetFolderPath,
+  Future<TestResult> run(String referenceFolderPath, String targetFolderPath,
       String reportPath, double threshold) async {
-    final List<ImagePair> imagePairs =
-        await getScoredResult(referenceFolderPath, targetFolderPath, threshold);
-    generateReport(imagePairs, reportPath, threshold);
+    final List<ImagePair> imagePairs = await _getScoredResult(
+        referenceFolderPath, targetFolderPath, threshold);
+    var result = TestResult(imagePairs: imagePairs, threshold: threshold);
+    _generateReport(result, reportPath);
+    return result;
   }
 }

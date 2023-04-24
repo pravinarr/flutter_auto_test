@@ -29,20 +29,10 @@ Note:
 ## Usage
 
 ```
-    flutter pub run flutter_auto_test 
+    final FlutterAutoTestBase flutterAutoTestBase = FlutterAutoTestBase();
+  TestResult result = await flutterAutoTestBase.run(
+      'example/images', 'example/images', 'report.html', 0.1);
+  print('Passed Test Case Percentage :${result.passedTestPercentage}');
 ```
 
-Default configuration 
-
-```
- Reference folder path: ref/images
- Target folder path: target/images
- Report generated Path: 'report.html'
- Threshold Value : 0.1 ( Images should match 90%)
-```
-
-You can change these by passing it as arguments 
-
-```
-    flutter pub run flutter_auto_test --refPath ref/images --tarPath target/images --reportPath report.html --threshold 0.1
-```
+You can add this as a separate test case in your inegration testing and add assert statements based on the TestResult Values 
