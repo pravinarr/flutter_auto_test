@@ -14,8 +14,8 @@ class FlutterAutoTestBase {
 }
 
 void main(
-    {String refPath = 'lib/images',
-    String tarPath = 'lib/images',
+    {String refPath = 'ref/images',
+    String tarPath = 'target/images',
     String reportPath = 'report.html',
     double threshold = 0.1}) {
   final FlutterAutoTestBase flutterAutoTestBase = FlutterAutoTestBase();

@@ -11,29 +11,38 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+This package can be used to generate report by comparing the screenshots on base screenshot images.
+
+This way we can add one more layer to the flutter integartion testing and automate the verification process of screenshots generated
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+On your local system, run your integration tests and capture the screenshots in a folder.
+
+Note:
+    1. Do not change the file names after the screenshots are generated. This library comapres the files based on the file names.
+    2. Currently this library support jpg, jpeg, png formats 
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+```
+    flutter pub run flutter_auto_test 
 ```
 
-## Additional information
+Default configuration 
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```
+ Reference folder path: ref/images
+ Target folder path: target/images
+ Report generated Path: 'report.html'
+ Threshold Value : 0.1 ( Images should match 90%)
+```
+
+You can change these by passing it as arguments 
+
+```
+    flutter pub run flutter_auto_test --refPath ref/images --tarPath target/images --reportPath report.html --threshold 0.1
+```
