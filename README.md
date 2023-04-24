@@ -22,11 +22,9 @@ This way we can add one more layer to the flutter integartion testing and automa
 
 On your local system, run your integration tests and capture the screenshots in a folder.
 
-###Note:
-
-    ####1. Do not change the file names after the screenshots are generated. This library comapres the files based on the file names.
-    ####2. Currently this library support jpg, jpeg, png formats 
-
+### Note:
+#### 1. Do not change the file names after the screenshots are generated. This library comapres the files based on the file names.
+#### 2. Currently this library support jpg, jpeg, png formats 
 ## Usage
 
 ```
